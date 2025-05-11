@@ -1,0 +1,105 @@
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+*.eggs/
+*.env
+*.venv
+env/
+venv/
+ENV/
+ENV.bak/
+pip-wheel-metadata/
+dist/
+build/
+*.manifest
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+test-results/
+
+# MyPy / Pyright / Linting
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# === ROS2 / Colcon ===
+build/
+install/
+log/
+*.log
+*.pyc
+*.swp
+.colcon/
+.colcon_install_layout
+ament_index/
+ament_cmake_index/
+*.db
+
+# === VS Code ===
+.vscode/
+.history/
+.code-workspace
+
+# === OS-specific ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+
+# === Git ===
+*.orig
+*.rej
+*.swo
+*.swp
+*.bak
+*.tmp
+
+# === URDF / Mesh Tools ===
+*.dae~
+*.stl~
+*.urdf~
+*.xacro~
+
+# === GUI / Tkinter related ===
+*.tcl
+*.tk
+*.db  # in case tkinter GUI writes a sqlite session
+__pycache__/
+
+# === Backup or generated files ===
+*.old
+*.bak
+*.save
+*.backup
+*.tmp
+
