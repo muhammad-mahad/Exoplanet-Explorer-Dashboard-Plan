@@ -87,3 +87,5 @@ with col4:
     fig4.add_annotation(x=1.5, y=2.5, text="Habitable Zone", showarrow=False, font=dict(color="green"))
 
     st.plotly_chart(fig4, use_container_width=True)
+   
+
