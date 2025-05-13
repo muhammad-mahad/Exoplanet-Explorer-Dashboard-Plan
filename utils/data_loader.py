@@ -54,18 +54,20 @@ def comprehensive_exoplanet_preprocessing(file_path):
         'dec': 'declination',
         'sy_dist': 'distance_from_earth_parsecs'
     }
-    df.rename(columns=column_name_mapping, inplace=True)
+    df = df.assign(**{ new_name: df[old_name] 
+                   for old_name, new_name in column_name_mapping.items() })
     
     # Standardized missing value handling
-    numeric_columns = [
-        'planet_radius_earth_radii', 'planet_mass_earth_masses', 
-        'orbital_period_days', 'orbit_semi_major_axis_au', 
-        'equilibrium_temperature', 'insolation_flux_compared_to_earth',
-        'planet_density', 'orbital_eccentricity', 
-        'planet_mass_best_measurement', 'star_temperature_kelvin',
-        'star_radius_solar_radii', 'star_mass_solar_masses', 
-        'star_age_billion_years', 'distance_from_earth_parsecs'
-    ]
+    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns
+    #     [
+    #     'planet_radius_earth_radii', 'planet_mass_earth_masses', 
+    #     'orbital_period_days', 'orbit_semi_major_axis_au', 
+    #     'equilibrium_temperature', 'insolation_flux_compared_to_earth',
+    #     'planet_density', 'orbital_eccentricity', 
+    #     'planet_mass_best_measurement', 'star_temperature_kelvin',
+    #     'star_radius_solar_radii', 'star_mass_solar_masses', 
+    #     'star_age_billion_years', 'distance_from_earth_parsecs'
+    # ]
     
     # Replace infinite values with NaN
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -89,12 +91,23 @@ def comprehensive_exoplanet_preprocessing(file_path):
             df[col].fillna(default_values.get(col, 0), inplace=True)
     
     # Categorical column handling
-    categorical_columns = [
-        'planet_name', 'host_star_name', 'discovery_method', 
-        'star_spectral_type'
-    ]
-    for col in categorical_columns:
-        df[col].fillna('Unknown', inplace=True)
+    categorical_cols = df.select_dtypes(include=['object']).columns
+
+    df[categorical_cols] = df[categorical_cols].fillna('Unknown')
+
+    # get the float64 columns
+    numeric_columns = df.select_dtypes(include=['float64']).columns
+
+    # round them to 2 decimals in-place
+    df[numeric_columns] = df[numeric_columns].round(2)
+
+    # TODO
+    # categorical_columns = [
+    #     'planet_name', 'host_star_name', 'discovery_method', 
+    #     'star_spectral_type'
+    # ]
+    # for col in categorical_columns:
+    #     df[col].fillna('Unknown', inplace=True)
     
     # Advanced feature engineering
     def safe_log_transform(series, epsilon=1e-10):
