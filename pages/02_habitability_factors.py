@@ -9,12 +9,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from utils import load_data
 
+PAGE_TITLE = "Habitability Factors"
+
 # Set page configuration
-st.set_page_config(page_title="Habitability Factors", layout="wide")
+st.set_page_config(page_title=PAGE_TITLE, layout="wide")
 
 df = load_data()
 
-st.title("Habitability Factors")
+st.title(PAGE_TITLE)
 st.markdown("Explore key planetary metrics and how they compare to Earth.")
 
 # Clean missing values
