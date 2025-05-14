@@ -59,15 +59,6 @@ def comprehensive_exoplanet_preprocessing(file_path):
     
     # Standardized missing value handling
     numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns
-    #     [
-    #     'planet_radius_earth_radii', 'planet_mass_earth_masses', 
-    #     'orbital_period_days', 'orbit_semi_major_axis_au', 
-    #     'equilibrium_temperature', 'insolation_flux_compared_to_earth',
-    #     'planet_density', 'orbital_eccentricity', 
-    #     'planet_mass_best_measurement', 'star_temperature_kelvin',
-    #     'star_radius_solar_radii', 'star_mass_solar_masses', 
-    #     'star_age_billion_years', 'distance_from_earth_parsecs'
-    # ]
     
     # Replace infinite values with NaN
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -100,14 +91,6 @@ def comprehensive_exoplanet_preprocessing(file_path):
 
     # round them to 2 decimals in-place
     df[numeric_columns] = df[numeric_columns].round(2)
-
-    # TODO
-    # categorical_columns = [
-    #     'planet_name', 'host_star_name', 'discovery_method', 
-    #     'star_spectral_type'
-    # ]
-    # for col in categorical_columns:
-    #     df[col].fillna('Unknown', inplace=True)
     
     # Advanced feature engineering
     def safe_log_transform(series, epsilon=1e-10):
@@ -193,8 +176,7 @@ def load_data():
     data = None
     for path in paths_to_check:
         if os.path.exists(path):
-            data = pd.read_csv(path)
-            return comprehensive_exoplanet_preprocessing(path)
+            data = comprehensive_exoplanet_preprocessing(path)
             break
 
     # If no real data file found, create simulated data for demonstration
@@ -244,14 +226,7 @@ def load_data():
             'dec': np.random.uniform(-90, 90, n_samples),  # Declination
             'sy_dist': np.random.lognormal(3, 1, n_samples),  # Distance in parsecs
         })
-    
-    # Data cleaning and preprocessing
-    # Handle missing values
-    numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
-    data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].median())
-    categorical_cols = data.select_dtypes(include=['object']).columns
-    data[categorical_cols] = data[categorical_cols].fillna('Unknown')
-    
+
     # Add some derived columns for analysis
     data['earth_similarity'] = 1 / (1 + 
                                    np.abs(np.log10(data['pl_rade'])) + 
