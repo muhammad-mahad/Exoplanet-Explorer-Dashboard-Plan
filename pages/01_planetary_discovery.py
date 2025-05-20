@@ -98,9 +98,10 @@ fig_tree = px.treemap(
 fig_tree.update_traces(root_color="lightgrey")
 st.plotly_chart(fig_tree, use_container_width=True)
 
-# --- 3. Discovery Method Evolution ---
-st.subheader("Discovery Method Evolution")
+# --- 3. Discovery Method Evolution (Circular Sunburst) ---
+st.subheader("Discovery Method Evolution (Circular View)")
 
+# Year range selection
 range_selector = st.radio("Select year range", options=['All Years', '1990-2010', '2010-2020', '2020+'])
 
 filtered = data.copy()
@@ -111,18 +112,20 @@ elif range_selector == '2010-2020':
 elif range_selector == '2020+':
     filtered = data[data['disc_year'] > 2020]
 
-evolution_df = filtered.groupby(['disc_year', 'discoverymethod']).size().reset_index(name='count')
-evolution_df = evolution_df.pivot(index='disc_year', columns='discoverymethod', values='count').fillna(0).cumsum().reset_index()
+# Group for sunburst
+sunburst_df = filtered.groupby(['disc_year', 'discoverymethod']).size().reset_index(name='count')
 
-fig_evolution = px.area(
-    evolution_df,
-    x='disc_year',
-    y=evolution_df.columns[1:],
-    labels={'value': 'Cumulative Count', 'disc_year': 'Discovery Year'},
-    title='Discovery Method Evolution'
+# Sunburst plot
+fig_sunburst = px.sunburst(
+    sunburst_df,
+    path=['disc_year', 'discoverymethod'],
+    values='count',
+    color='disc_year',
+    color_continuous_scale='Plasma',
+    title='Discovery Method Evolution (Sunburst View)'
 )
 
-st.plotly_chart(fig_evolution, use_container_width=True)
+st.plotly_chart(fig_sunburst, use_container_width=True)
 
 # --- 4. Star Type Distribution ---
 st.subheader("Star Type Distribution")
