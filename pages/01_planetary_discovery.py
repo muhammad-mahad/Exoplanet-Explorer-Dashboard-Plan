@@ -5,7 +5,16 @@ import plotly.graph_objects as go
 
 from utils import load_data
 
-st.set_page_config(page_title="Planetary Discovery Overview", layout="wide")
+# Set page configuration
+ICON = "🪐"
+PAGE_TITLE = "Planetary Discovery"
+
+# --- Page Configuration ---
+st.set_page_config(
+    page_title=PAGE_TITLE,
+    page_icon=ICON,
+    layout="wide"
+)
 
 # Load dataset
 data = load_data()
@@ -28,7 +37,7 @@ dummy_rows = pd.DataFrame({
 
 data = pd.concat([data, dummy_rows], ignore_index=True)
 
-st.title("🪐 Planetary Discovery Overview")
+st.title(f"{ICON} {PAGE_TITLE}")
 
 # --- 1. Interactive Discovery Timeline ---
 st.subheader("Interactive Discovery Timeline")
@@ -184,3 +193,6 @@ fig_bubble.update_layout(
 )
 
 st.plotly_chart(fig_bubble, use_container_width=True)
+
+st.markdown("---")
+st.caption("Visualizations generated using NASA Exoplanet Archive data. Interactive dashboard built with Streamlit and Plotly.")
