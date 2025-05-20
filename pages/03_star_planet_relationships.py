@@ -472,4 +472,4 @@ with s5_col1:
 
 # --- Footer ---
 st.markdown("---")
-st.caption("Data source: NASA Exoplanet Archive (via preprocessed dataset) • Built with Streamlit & Plotly")
+st.caption("Visualizations generated using NASA Exoplanet Archive data. Interactive dashboard built with Streamlit and Plotly.")

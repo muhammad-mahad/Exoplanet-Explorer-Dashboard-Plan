@@ -8,13 +8,20 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils import load_data
 
 # Set page configuration
-PAGE_TITLE = "🪐 Habitability Factors Dashboard"
-st.set_page_config(page_title=PAGE_TITLE, layout="wide")
+ICON = "🌍"
+PAGE_TITLE = "Habitability Factors"
+
+# --- Page Configuration ---
+st.set_page_config(
+    page_title=PAGE_TITLE,
+    page_icon=ICON,
+    layout="wide"
+)
 
 # Load dataset
 df = load_data()
 
-st.title(PAGE_TITLE)
+st.title(f"{ICON} {PAGE_TITLE}")
 st.markdown("""
 Explore potential habitability of exoplanets using key metrics:
 - **Mass vs. Radius** for Earth-likeness
@@ -33,7 +40,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("🌍 Mass vs. Radius Scatter Plot")
     st.markdown("Analyze the relation between planet mass and radius. Color and size reveal climate potential.")
-    temp_range = st.slider("Filter by Equilibrium Temperature (K)", int(clean_df["pl_eqt"].min()), int(clean_df["pl_eqt"].max()), (200, 500))
+    temp_range = st.slider("Filter by Equilibrium Temperature (K)", int(clean_df["pl_eqt"].min()), int(clean_df["pl_eqt"].max()), (200, 911))
     temp_filtered = clean_df[(clean_df["pl_eqt"] >= temp_range[0]) & (clean_df["pl_eqt"] <= temp_range[1])]
 
     fig1 = px.scatter(
@@ -53,7 +60,7 @@ with col2:
     st.subheader("🌀 Orbital Properties Visualization")
     st.markdown("Inspect how orbital characteristics affect planetary stability and seasonal variation.")
     method_options = df["discoverymethod"].dropna().unique().tolist()
-    selected_methods = st.multiselect("Filter by Discovery Methods:", method_options)
+    selected_methods = st.multiselect("Filter by Discovery Methods:", method_options, default=[method_options[0]])
     search_text = st.text_input("Search by Planet or Host Name")
 
     filtered_orb = df[df[["pl_orbper", "pl_orbsmax", "pl_orbeccen"]].notnull().all(axis=1)]
@@ -85,6 +92,8 @@ with col3:
         labels={"pl_dens": "Planet Density (g/cm³)"},
         color_discrete_sequence=["#636EFA"]
     )
+    fig3.update_layout(yaxis_title="# of Planets")
+    fig3.update_traces(hovertemplate='Planet Density (g/cm³): %{x}<br># of Planets: %{y}<extra></extra>')
     fig3.add_vline(x=5.51, line_dash="dash", line_color="green", annotation_text="Earth", annotation_position="top")
     st.plotly_chart(fig3, use_container_width=True)
 
@@ -107,4 +116,5 @@ with col4:
     st.plotly_chart(fig4, use_container_width=True)
 
 # Footer Note
+st.markdown("---")
 st.caption("Visualizations generated using NASA Exoplanet Archive data. Interactive dashboard built with Streamlit and Plotly.")

@@ -70,7 +70,7 @@ def comprehensive_exoplanet_preprocessing(file_path):
         missing_percentage = df[col].isna().mean() * 100
         
         if missing_percentage < 10:
-            df[col].fillna(df[col].median(), inplace=True)
+            df[col].fillna(df[col].median())
         else:
             # Domain-specific default values or 0
             default_values = {
