@@ -13,20 +13,20 @@ This project is a simple and interactive data visualization app built using **St
 ```
 
 Exoplanet-Explorer-Dashboard-Plan/
-├── .gitignore               \# Specifies intentionally untracked files that Git should ignore
-├── Dashboard.py                   \# Main Streamlit app script
+├── .gitignore                          \# Specifies untracked files that Git should ignore
+├── Dashboard.py                        \# Main Streamlit app script
 ├── data/
-│   └── exoplanets\_full\_features.csv \# Dataset for the application
+│   └── exoplanets_full_features.csv    \# Dataset for the application
 ├── pages/
-│   ├── 01\_Planetary\_Discovery.py    \# Streamlit page for planetary discovery insights
-│   ├── 02\_Habitability\_Factors.py   \# Streamlit page for habitability factors
-│   └── 03\_Star\_Planet\_Relationships.py \# Streamlit page for star-planet relationships
+│   ├── 01_Planetary_Discovery.py       \# Streamlit page for planetary discovery insights
+│   ├── 02_Habitability_Factors.py      \# Streamlit page for habitability factors
+│   └── 03_Star_Planet_Relationships.py \# Streamlit page for star-planet relationships
 ├── utils/
-│   ├── **init**.py          \# Makes 'utils' a Python package
-│   └── data\_loader.py       \# Utility script for loading data
-├── venv/                    \# Virtual environment directory
-├── README.md                \# Project documentation
-└── requirements.txt         \# List of dependencies
+│   ├── **init**.py                     \# Makes 'utils' a Python package
+│   └── data_loader.py                  \# Utility script for loading data
+├── venv/                               \# Virtual environment directory
+├── README.md                           \# Project documentation
+└── requirements.txt                    \# List of dependencies
 
 ````
 
@@ -67,14 +67,4 @@ Replace `Dashboard.py` with the name of your script:
 
 ```bash
 streamlit run Dashboard.py
-```
-
-## ✅ Requirements
-
-See [`requirements.txt`](https://www.google.com/search?q=./requirements.txt) for the list of required packages.
-
-To regenerate it after adding new packages:
-
-```bash
-pip freeze > requirements.txt
 ```
